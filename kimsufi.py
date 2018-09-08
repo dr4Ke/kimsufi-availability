@@ -33,36 +33,24 @@ VERSION = "1.0"
 API_URL = "https://www.ovh.com/engine/api/dedicated/server/availabilities?country=fr"
 REFERENCES = {
     "1801sk12": "KS-1",
+    "1804sk12": "KS-1",
     "1801sk13": "KS-2",
     "1801sk14": "KS-3",
     "1801sk15": "KS-4",
     "1801sk16": "KS-5",
+    "1804sk16": "KS-5",
     "1801sk17": "KS-6",
-
-    "141game1": "GAME-1",
-    "141game2": "GAME-2",
-    "141game3": "GAME-3",
-
-    "142sys4": "SYS-IP-1",
-    "142sys5": "SYS-IP-2",
-    "142sys8": "SYS-IP-4",
-    "142sys6": "SYS-IP-5",
-    "142sys10": "SYS-IP-5S",
-    "142sys7": "SYS-IP-6",
-    "142sys9": "SYS-IP-6S",
-
-    "143sys13": "E3-SSD-1",
-    "143sys10": "E3-SSD-2",
-    "143sys11": "E3-SSD-3",
-    "143sys12": "E3-SSD-4",
-
-    "143sys4": "E3-SAT-1",
-    "143sys1": "E3-SAT-2",
-    "143sys2": "E3-SAT-3",
-    "143sys3": "E3-SAT-4",
-
-    "141bk1": "BK-8T",
-    "141bk2": "BK-24T"
+    "1801sk18": "KS-7",
+    "1804sk18": "KS-7",
+    "1801sk19": "KS-8",
+    "1801sk20": "KS-9",
+    "1804sk20": "KS-9",
+    "1801sk21": "KS-10",
+    "1804sk21": "KS-10",
+    "1801sk22": "KS-11",
+    "1804sk22": "KS-11",
+    "1801sk23": "KS-12",
+    "1804sk23": "KS-12",
 }
 
 ZONES = {
