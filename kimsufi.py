@@ -30,19 +30,14 @@ from docopt import docopt
 
 VERSION = "1.0"
 
-API_URL = "https://ws.ovh.com/dedicated/r2/ws.dispatcher/getAvailability2"
+API_URL = "https://www.ovh.com/engine/api/dedicated/server/availabilities?country=fr"
 REFERENCES = {
-    "150sk10": "KS-1",
-    "150sk20": "KS-2",
-    "150sk21": "KS-2",
-    "150sk22": "KS-2 SSD",
-    "150sk30": "KS-3",
-    "150sk31": "KS-3",
-    "150sk40": "KS-4",
-    "150sk41": "KS-4",
-    "150sk42": "KS-4",
-    "150sk50": "KS-5",
-    "150sk60": "KS-6",
+    "1801sk12": "KS-1",
+    "1801sk13": "KS-2",
+    "1801sk14": "KS-3",
+    "1801sk15": "KS-4",
+    "1801sk16": "KS-5",
+    "1801sk17": "KS-6",
 
     "141game1": "GAME-1",
     "141game2": "GAME-2",
@@ -70,10 +65,12 @@ REFERENCES = {
     "141bk2": "BK-24T"
 }
 
-ZONES = {'gra': 'Gravelines',
+ZONES = {
+         'gra': 'Gravelines',
          'sbg': 'Strasbourg',
          'rbx': 'Roubaix',
-         'bhs': 'Beauharnois'}
+         'bhs': 'Beauharnois',
+        }
 
 CURRENT_PATH = os.path.dirname(__file__)
 
@@ -91,13 +88,13 @@ def get_servers(models):
     """Get the servers from the OVH API."""
 
     r = requests.get(API_URL)
-    response = r.json()['answer']['availability']
+    response = r.json()
 
     search = REFERENCES
     if models:
         search = {k: v for k, v in REFERENCES.items() if v in models}
 
-    return [k for k in response if any(r == k['reference'] for r in search)]
+    return [k for k in response if any(r == k['hardware'] for r in search)]
 
 
 def get_ref(name):
@@ -146,7 +143,7 @@ def send_mail(output, total):
     try:
         server.login(mail_username, mail_password)
     except smtplib.SMTPAuthenticationError:
-        print('SMPT Auth Error!')
+        print('SMTP Auth Error!')
         return False
 
     try:
@@ -167,15 +164,15 @@ if __name__ == '__main__':
     output = ""
 
     for k in kim:
-        output += "\n{}\n".format(REFERENCES[k['reference']])
-        output += "{}\n".format("=" * len(REFERENCES[k['reference']]))
+        output += "\n{}\n".format(REFERENCES[k['hardware']])
+        output += "{}\n".format("=" * len(REFERENCES[k['hardware']]))
 
-        for z in k['zones']:
+        for z in k['datacenters']:
             invalids = ['unavailable', 'unknown']
             availability = z['availability']
             if not availability in invalids:
                 total += 1
-            output += '{} : {}\n'.format(get_zone_name(z['zone']), availability)
+            output += '{} : {}\n'.format(get_zone_name(z['datacenter']), availability)
 
     output += "\n=======\nRESULT : {0} server{1} {2} available on Kimsufi\n=======\n".format(
         total,
